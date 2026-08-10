@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finam_prof</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo"><span class="logo-icon">R$</span></div>
+      <nav class="nav-links">
+        <a href="#" class="active">Mercados B3</a>
+        <a href="#">Análise</a>
+        <a href="#">Portfólio</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <span class="nav-user-label">Conta BR</span>
+      <span class="nav-user-handle">@TradeExpert</span>
+    </div>
+  </header>
+
+  <main class="dashboard">
+
+    <section class="controls-bar">
+      <div class="controls-left">
+        <!-- Seletor de 35 Ativos -->
+        <div class="select-wrapper asset-select">
+          <span class="asset-icon">🇧🇷</span>
+          <select id="assetSelector">
+            <!-- Principais -->
+            <option value="PETR4" selected>PETR4.SA - Petrobras</option>
+            <option value="VALE3">VALE3.SA - Vale</option>
+            <option value="ITUB4">ITUB4.SA - Itaú Unibanco</option>
+            <option value="BBAS3">BBAS3.SA - Banco do Brasil</option>
+            <option value="BBDC4">BBDC4.SA - Bradesco</option>
+            
+            <!-- Ações B3 -->
+            <option value="B3SA3">B3SA3.SA - B3</option>
+            <option value="ABEV3">ABEV3.SA - Ambev</option>
+            <option value="WEGE3">WEGE3.SA - WEG</option>
+            <option value="RENT3">RENT3.SA - Localiza</option>
+            <option value="PRIO3">PRIO3.SA - Prio</option>
+            <option value="ELET3">ELET3.SA - Eletrobras</option>
+            <option value="GGBR4">GGBR4.SA - Gerdau</option>
+            <option value="SUZB3">SUZB3.SA - Suzano</option>
+            <option value="JBSS3">JBSS3.SA - JBS</option>
+            <option value="RAIZ4">RAIZ4.SA - Raízen</option>
+            <option value="RDOR3">RDOR3.SA - Rede D'Or</option>
+            <option value="LREN3">LREN3.SA - Lojas Renner</option>
+            <option value="VBBR3">VBBR3.SA - Vibra Energia</option>
+            <option value="MGLU3">MGLU3.SA - Magazine Luiza</option>
+            <option value="CSNA3">CSNA3.SA - Siderúrgica Nacional</option>
+            <option value="CPLE6">CPLE6.SA - Copel</option>
+            <option value="EQTL3">EQTL3.SA - Equatorial Energia</option>
+            <option value="EMBR3">EMBR3.SA - Embraer</option>
+            <option value="HAPV3">HAPV3.SA - Hapvida</option>
+
+            <!-- Units -->
+            <option value="KLBN11">KLBN11.SA - Klabin</option>
+            <option value="SANB11">SANB11.SA - Santander Brasil</option>
+            <option value="TOTS3">TOTS3.SA - TOTVS</option>
+            <option value="VIVT3">VIVT3.SA - Telefônica Vivo</option>
+            <option value="BBSE3">BBSE3.SA - BB Seguridade</option>
+
+            <!-- ETFs -->
+            <option value="BOVA11">BOVA11.SA - ETF Ibovespa</option>
+            <option value="SMAL11">SMAL11.SA - ETF Small Caps</option>
+            <option value="IVVB11">IVVB11.SA - ETF S&P 500 BRL</option>
+
+            <!-- Cripto BRL -->
+            <option value="BTCBRL">BTC/BRL - Bitcoin em Real</option>
+            <option value="ETHBRL">ETH/BRL - Ethereum em Real</option>
+            <option value="SOLBRL">SOL/BRL - Solana em Real</option>
+            <option value="USDTBRL">USDT/BRL - Tether em Real</option>
+          </select>
+        </div>
+
+        <!-- Seletor de Período -->
+        <div class="select-wrapper period-select">
+          <span class="calendar-icon">📅</span>
+          <select id="periodSelector">
+            <option value="1M" selected>Período: 1 Mês</option>
+            <option value="3M">Período: 3 Meses</option>
+            <option value="1Y">Período: 1 Ano</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="controls-right">
+        <button class="btn btn-status active">Ativo</button>
+        <button class="btn btn-ma ma-20 active" id="toggleMa20">
+          <span class="indicator-dot yellow"></span> Média Móvel 20 ~
+        </button>
+        <button class="btn btn-ma ma-50 active" id="toggleMa50">
+          <span class="indicator-dot blue"></span> Média Móvel 50 ~
+        </button>
+      </div>
+    </section>
+
+    <!-- Métricas em BRL -->
+    <section class="metrics-bar">
+      <div class="metric-card">
+        <span class="metric-label">Abertura:</span>
+        <div class="metric-value-group">
+          <span class="metric-value" id="valAbertura">R$ 0,00</span>
+          <span class="metric-currency">(BRL)</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Fechamento:</span>
+        <div class="metric-value-group">
+          <span class="metric-value" id="valFechamento">R$ 0,00</span>
+          <span class="metric-currency">(BRL)</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Volume Estimado:</span>
+        <div class="metric-value-group">
+          <span class="metric-value" id="valVolume">R$ 14,5M</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Mínima / Máxima:</span>
+        <div class="metric-value-group">
+          <span class="metric-value" id="valAltaBaixa">R$ 0,00 / R$ 0,00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title-group">
+          <h2 id="chartMainTitle">Gráfico Diário PETR4.SA - 20 MA & 50 MA</h2>
+          <div class="chart-subtitle" id="chartSubTitle">
+            Cotação em Reais (BRL) &nbsp;|&nbsp; Variação Relativa: <span id="rsiValue">50.00</span>
+          </div>
+        </div>
+        <div class="chart-tools">
+          <span class="timeframe-badge">1 DIA ∨</span>
+          <button class="icon-btn">⛶</button>
+          <button class="icon-btn">⋮</button>
+        </div>
+      </div>
+
+      <!-- Container do Gráfico Principal -->
+      <div id="tvChartContainer" class="chart-body">
+        <div class="chart-overlay-buttons">
+          <button id="btnOverlayVelas" class="chart-overlay-btn active">🕯️ Velas</button>
+          <button id="btnOverlayBarras" class="chart-overlay-btn">📊 Barras</button>
+          <button id="btnOverlayLinha" class="chart-overlay-btn">📈 Linha</button>
+        </div>
+      </div>
+
+      <div class="sub-chart-header">
+        <span class="sub-chart-title">Painel de Força Relativa | Acima de 50 (Verde) / Abaixo de 50 (Vermelho)</span>
+      </div>
+
+      <!-- Container do Gráfico Secundário (Área) -->
+      <div id="subChartContainer" class="sub-chart-body"></div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
